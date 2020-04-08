@@ -89,9 +89,13 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
                 newDeaths = datum.select("td")[4].text().trim()
                 totalRecovered = datum.select("td")[5].text().trim()
 
+                //World 제거
+                if (country == "World"){
+                    continue
+                }
+
                 // 영어 -> 한글
-                country =
-                    CountryTrans(country)
+                country = CountryTrans(country)
 
                 if(totalCases.length == 0){
                      totalCases += '0'
