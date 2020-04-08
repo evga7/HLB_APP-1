@@ -40,7 +40,7 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
                         val infoSplit = info.split(" ")
 
                         val year = infoSplit[4].substring(0, infoSplit[4].length - 1) // 년도
-                        //val month = infoSplit[2]// 월
+
                         val month = infoSplit[2].let {mon->
                             when{
                                 mon == "January" -> "01"
@@ -146,13 +146,7 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
 
             val splitData  = { c: String->
                 val case = c.split('\n')
-
-                if (case[0].length > 4){
-                    val a = case[0].split(',')
-                    a[0] + a[1]
-                }else{
-                    case[0]
-                }
+                case[0].replace(",","")
             }
 
             // totalCase reverse sort
