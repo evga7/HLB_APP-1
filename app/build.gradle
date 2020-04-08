@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.HLB.coronaapp"
+        applicationId "com.HLB.coronamagnifier"
         minSdkVersion 16
         targetSdkVersion 29
         versionCode 2

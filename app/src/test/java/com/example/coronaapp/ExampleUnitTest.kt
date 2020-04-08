@@ -1,4 +1,4 @@
-package com.example.coronaapp
+package com.example.coronamagnifier
 
 import org.junit.Test
 
