@@ -79,6 +79,7 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
 
             // country cnt
             var countCnt :Int = 1
+            var continent:Int = 1
 
             for (datum in data){
 
@@ -121,6 +122,14 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
                     totalRecovered
                 )
 
+                //대륙별 추가
+                if (country == "Europe" || country == "North America" || country == "Asia" || country == "South America" ||
+                    country == "Africa" || country == "Oceania"){
+
+                    Singleton.continent?.add(total)
+                    continue
+                }
+
                 infoList.add(total)
 
                 countCnt++
@@ -155,6 +164,12 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
             // numberling
            for (i in 0 until infoList.size){
                 infoList[i].num = i+1
+            }
+
+            Singleton.continent?.let { cont->
+                for (i in 0 until cont.size){
+                    cont[i].num = i+1
+                }
             }
 
             infoList.add(

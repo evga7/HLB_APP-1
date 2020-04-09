@@ -30,15 +30,20 @@ class FragmentWorld : Fragment() {
             Singleton.coronaFlag = true
             Singleton.countrySum = Singleton.coronaList?.get(
                 Singleton.coronaList?.size!! - 1)!!.country
+
             Singleton.totalCasesSum = Singleton.coronaList?.get(
                 Singleton.coronaList?.size!! - 1)!!.totalCases
+
             Singleton.totalDeathsSum = Singleton.coronaList?.get(
                 Singleton.coronaList?.size!! - 1)!!.totalDeaths
+
             Singleton.totalRecoveredSum = Singleton.coronaList?.get(
                 Singleton.coronaList?.size!! - 1)!!.totalRecovered
+
             Singleton.coronaList?.remove(
                 Singleton.coronaList?.get(
                     Singleton.coronaList?.size!!-1)!!)
+
         }
 
         rootView.a.text = Singleton.countrySum

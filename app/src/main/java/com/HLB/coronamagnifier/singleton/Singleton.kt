@@ -27,6 +27,7 @@ class Singleton {
 
         //world
         var coronaList: ArrayList<Information>? = null
+        var continent: ArrayList<Information>? = null
         var coronaFlag:Boolean = false
         var countrySum:String? = null
         var totalCasesSum:String? = null
