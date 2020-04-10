@@ -2,6 +2,7 @@ package com.HLB.coronamagnifier.world.worldAsync
 
 import android.content.Context
 import android.os.AsyncTask
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.HLB.coronamagnifier.progresscircle.CustomProgressCircle
@@ -79,7 +80,6 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
 
             // country cnt
             var countCnt :Int = 1
-            var continent:Int = 1
 
             for (datum in data){
 
@@ -91,7 +91,7 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
                 totalRecovered = datum.select("td")[5].text().trim()
 
                 //World 제거
-                if (country == "World"){
+                if (country == "World" || country == "Total:"){
                     continue
                 }
 
@@ -135,23 +135,6 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
                 countCnt++
             }
 
-            // total data addtotalCases
-            val totalCasesSum:String
-            val totalDeathsSum:String
-            val totalRecoveredSum:String
-
-            infoList[infoList.size - 1].totalCases.split("\n").let{ it->
-                totalCasesSum = it[0]
-            }
-
-            infoList[infoList.size - 1].totalDeaths.split("\n").let { it->
-                totalDeathsSum = it[0]
-            }
-
-            totalRecoveredSum = infoList[infoList.size - 1].totalRecovered
-
-            //total remove
-            infoList.remove(infoList[infoList.size - 1])
 
             val splitData  = { c: String->
                 val case = c.split('\n')
@@ -172,15 +155,21 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
                 }
             }
 
-            infoList.add(
-                Information(
-                    0,
-                    (countCnt - 2).toString(),
-                    totalCasesSum,
-                    totalDeathsSum,
-                    totalRecoveredSum
+            // total data addtotalCases
+            data[data.size-1].let {total->
+                val totC = total.select("td")[1].text().trim()
+                val totD = total.select("td")[3].text().trim()
+                val totR = total.select("td")[5].text().trim()
+                infoList.add(
+                    Information(
+                        0,
+                        (countCnt - 1).toString(),
+                        totC,
+                        totD,
+                        totR
+                    )
                 )
-            )
+            }
 
         }catch (e : IOException) {
             e.printStackTrace()

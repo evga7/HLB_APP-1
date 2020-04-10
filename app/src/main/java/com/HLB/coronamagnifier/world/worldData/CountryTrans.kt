@@ -212,5 +212,6 @@ fun CountryTrans(c:String):String =
         c == "Falkland Islands" -> "포틀랜드\n제도"
         c == "Western Sahara" -> "서사하라"
         c == "Sao Tome and Principe" -> "상투메프린시페"
+        c == "Yemen" -> "예멘"
         else -> c
     }

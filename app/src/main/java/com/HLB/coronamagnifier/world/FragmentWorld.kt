@@ -1,6 +1,7 @@
 package com.HLB.coronamagnifier.world
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,21 +29,31 @@ class FragmentWorld : Fragment() {
         // tablelayout total data add
         if (Singleton.coronaFlag == false){
             Singleton.coronaFlag = true
-            Singleton.countrySum = Singleton.coronaList?.get(
-                Singleton.coronaList?.size!! - 1)!!.country
 
-            Singleton.totalCasesSum = Singleton.coronaList?.get(
-                Singleton.coronaList?.size!! - 1)!!.totalCases
+            if (Singleton.coronaList?.get(
+                    Singleton.coronaList?.size!! - 1)!!.num == 0){
+                Singleton.countrySum = Singleton.coronaList?.get(
+                    Singleton.coronaList?.size!! - 1)!!.country
 
-            Singleton.totalDeathsSum = Singleton.coronaList?.get(
-                Singleton.coronaList?.size!! - 1)!!.totalDeaths
+                Singleton.totalCasesSum = Singleton.coronaList?.get(
+                    Singleton.coronaList?.size!! - 1)!!.totalCases
 
-            Singleton.totalRecoveredSum = Singleton.coronaList?.get(
-                Singleton.coronaList?.size!! - 1)!!.totalRecovered
+                Singleton.totalDeathsSum = Singleton.coronaList?.get(
+                    Singleton.coronaList?.size!! - 1)!!.totalDeaths
 
-            Singleton.coronaList?.remove(
-                Singleton.coronaList?.get(
-                    Singleton.coronaList?.size!!-1)!!)
+                Singleton.totalRecoveredSum = Singleton.coronaList?.get(
+                    Singleton.coronaList?.size!! - 1)!!.totalRecovered
+
+                Singleton.coronaList?.remove(
+                    Singleton.coronaList?.get(
+                        Singleton.coronaList?.size!!-1)!!)
+            }
+            else{
+                Singleton.countrySum = "error"
+                Singleton.totalCasesSum = "error"
+                Singleton.totalDeathsSum = "error"
+                Singleton.totalRecoveredSum = "error"
+            }
 
         }
 
@@ -58,7 +69,6 @@ class FragmentWorld : Fragment() {
             layoutManager = LinearLayoutManager(activity)
             adapter =
                 WorldAdapter(Singleton.coronaList!!)
-
         }
 
         return rootView
