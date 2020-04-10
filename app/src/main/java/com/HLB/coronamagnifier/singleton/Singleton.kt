@@ -94,7 +94,7 @@ class Singleton {
                     var temp: String=""
                     try {
                         // Log.d("try", " 정보를 가져옵니다!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ${lat}, ${lng}")
-                        val stream = URL("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+lat.toString()+"&lng="+lng.toString()+"&m=1600").openStream()
+                        val stream = URL("https://8oi9s0nnth.apigw.ntruss.com/corona19-masks/v1/storesByGeo/json?lat="+lat.toString()+"&lng="+lng.toString()+"&m=2000").openStream()
                         val read = BufferedReader(InputStreamReader(stream, "UTF-8"))
                         var line:String?=read.readLine()
                         while(line!=null){

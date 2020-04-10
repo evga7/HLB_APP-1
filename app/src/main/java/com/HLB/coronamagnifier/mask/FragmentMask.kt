@@ -139,14 +139,14 @@ class FragmentMask : Fragment(), OnMapReadyCallback {
             }
         })
 
-        searchButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                Singleton.getPharmacyData(userChoice.latitude, userChoice.longitude,mContext)
-                stockInfo.visibility = View.VISIBLE
-                search.visibility = View.INVISIBLE
-                choiceMarker.map = null
-            }
-        })
+//        searchButton.setOnClickListener(object : View.OnClickListener {
+//            override fun onClick(v: View?) {
+//                Singleton.getPharmacyData(userChoice.latitude, userChoice.longitude,mContext)
+//                stockInfo.visibility = View.VISIBLE
+//                search.visibility = View.INVISIBLE
+//                choiceMarker.map = null
+//            }
+//        })
 
         searchCloseButton.setOnClickListener(object : View.OnClickListener{
             override fun onClick(v: View?) {
@@ -215,17 +215,17 @@ class FragmentMask : Fragment(), OnMapReadyCallback {
                 Singleton.userLatLng = LatLng(coord.latitude, coord.longitude)
                 latitude = coord.latitude
                 longitude = coord.longitude
-                Singleton.search = true
-                cameraUpdate = CameraUpdate.scrollAndZoomTo(LatLng(coord.latitude, coord.longitude), 14.0)
-                    .animate(CameraAnimation.Linear)
-                navermap.moveCamera(cameraUpdate)
-                search.visibility = View.VISIBLE
-                userChoice = LatLng(coord.latitude, coord.longitude)
-                choiceMarker.iconTintColor = Color.rgb(94, 171, 232)
-                choiceMarker.position = LatLng(latitude, longitude)
-                choiceMarker.width = 80
-                choiceMarker.height = 120
-                choiceMarker.map = navermap
+//                Singleton.search = true
+//                cameraUpdate = CameraUpdate.scrollAndZoomTo(LatLng(coord.latitude, coord.longitude), 14.0)
+//                    .animate(CameraAnimation.Linear)
+//                navermap.moveCamera(cameraUpdate)
+//                search.visibility = View.VISIBLE
+//                userChoice = LatLng(coord.latitude, coord.longitude)
+//                choiceMarker.iconTintColor = Color.rgb(94, 171, 232)
+//                choiceMarker.position = LatLng(latitude, longitude)
+//                choiceMarker.width = 80
+//                choiceMarker.height = 120
+//                choiceMarker.map = navermap
             }
         }
         mapListener?.invoke()
@@ -249,13 +249,104 @@ class FragmentMask : Fragment(), OnMapReadyCallback {
         naverMap.extent = LatLngBounds(LatLng(31.43, 122.37), LatLng(44.35, 132.0))
 
         // 마커 그리는 함수.
-        createMarker()
+        //createMarker()
+        if(array == null) {
+            return
+        }
 
-        /* // 네이버맵 클릭 시 열린 infoWindow 를 닫게 함.
+        // 마커 위에 띄울 약국정보창(말풍선 같이 생김).
+        val infoWindow = InfoWindow()
+        infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(mContext) {
+            override fun getText(infoWindow: InfoWindow): CharSequence {
+                return infoWindow.marker?.tag as CharSequence? ?: ""
+            }
+        }
+        // 마커를 클릭 시 infoWindow 로 정보를 보이기 위한 OnClickListener
+        val markerListener = Overlay.OnClickListener { overlay ->
+            val marker = overlay as Marker
+
+            if(marker.infoWindow == null) {
+                // 현재 마커에 정보 창이 열려있지 않을 경우 엶
+                infoWindow.open(marker)
+            }
+            else {
+                infoWindow.close()
+            }
+
+            true
+        }
+
+
+        if(markers.isNotEmpty()) {
+            markers.forEach { marker ->
+                marker.map = null
+            }
+            markers.clear()
+        }
+
+        array!!.forEach {
+
+            markers += Marker().apply {
+
+                position = LatLng(it.latitude, it.longitude)
+                icon = MarkerIcons.BLACK
+
+                // var stat : String? = null
+
+                if (it.remain_stat == "plenty") {
+                    iconTintColor = Color.rgb(48,211, 90)
+                }
+
+                else if(it.remain_stat == "some") {
+                    iconTintColor = Color.YELLOW
+                }
+
+                else if(it.remain_stat == "few") {
+                    iconTintColor = Color.RED
+                }
+
+                else {
+                    iconTintColor = Color.GRAY
+                }
+
+                width = 50
+                height = 80
+
+                var tmp : String? = null
+
+                if (it.type == "01") {
+                    tmp = "약국"
+                }
+                else if (it.type == "02") {
+                    tmp = "우체국"
+                }
+                else {
+                    tmp = "농협"
+                }
+
+                if(it.remain_stat == "null") {
+                    tag = it.name + " ($tmp) " + "\n정보없음"
+                }
+                else {
+                    //tag = it.name + "($tmp)" + "\n주소 : " + it.addr + "\n입고시간 : " + it.stock_at
+                    tag = it.name + "($tmp)" + "\n입고시간 : " + it.stock_at
+                }
+
+                this.onClickListener = markerListener
+            }
+        }
+
+        array!!.clear()
+
+        markers.forEach{ marker ->
+            marker.map = navermap
+        }
+
+        // 네이버맵 클릭 시 열린 infoWindow 를 닫게 함.
         naverMap.setOnMapClickListener { pointF, latLng ->
             infoWindow.close()
         }
-        */
+
     }
 
     // 마스크 지도 이용전 보일 공지사항을 보일 다이얼로그
