@@ -99,13 +99,11 @@ class MainActivity : AppCompatActivity() {
             Singleton.Activity = this
 
             // 위치가 켜져 있지 않은 경우 위치 설정창으로 넘김 ==> 마스크 쪽을 옮길 수도 있음.
-            if (!Singleton.isGpsOn()) {
+            if (!Singleton.isGpsOn() && checkPermission(false)) {
                 showLocationDialog()
             }
 
             content = findViewById(R.id.frameLayout)
-
-            //Singleton()
 
             navigationView.setOnTabInterceptListener(object :
                 AnimatedBottomBar.OnTabInterceptListener {
@@ -142,19 +140,37 @@ class MainActivity : AppCompatActivity() {
                     }
                     if (newTab.id == R.id.mask) {
 
-                        connectState.register()
-                        connectState.unregister()
+                        var chk: Boolean = checkPermission(false)
+
                         Singleton.backframent = 0
-                        if (Singleton.isGpsOn()) {
-                            currentId=2// GPS 가 켜져있는 경우
+
+                        // 위치권한 및 GPS 가 모두 켜져있는 경우
+                        if (Singleton.isGpsOn() && chk) {
+                            currentId=2
                             // 사용자 인근 마스크 판매점 얻고 맵에 그림
                             Singleton.search = false
                             Singleton.getPharmacyData(
                                 0.0,
                                 0.0, this@MainActivity
                             )
-                        } else { // GPS 가 켜져 있지 않은 경우
-                            showLocationDialog()
+                        }
+                        // 위치권한이나 위치가 켜져 있지 않은 경우
+                        else {
+
+                            if(!chk && Singleton.isGpsOn()) { // 확 인
+                                // Log.d("else", "2 !!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                                checkPermission(true)
+                            }
+                            else if(chk && !Singleton.isGpsOn()) { // 확 인
+                                // Log.d("else", "3 !!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                                showLocationDialog()
+                            }
+                            else { // 확 인
+                                // Log.d("else", "4 !!!!!!!!!!!!!!!!!!!!!!!!!!!")
+                                showLocationDialog()
+                                checkPermission(true)
+                            }
+
                         }
 
                     }
@@ -173,7 +189,7 @@ class MainActivity : AppCompatActivity() {
 
             //addFragment(fragment)
             //사용자에게 위치 권한 설정을 물어봄.
-            checkPermission()
+            checkPermission(true)
         }
 
     }
@@ -187,10 +203,10 @@ class MainActivity : AppCompatActivity() {
 
 
     // 사용자에게 권한을 확인할 함수. onCreate 에서 호출, 마시멜로우 이상부터 확인해야함.
-    private fun checkPermission() {
+    private fun checkPermission(check: Boolean) : Boolean {
         // 실행한 기기의 안드로이드 버전이 마시멜로우 보다 낮으면 검사를 하지 않음.
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            return
+            return true
         }
 
         for(permission : String in permission_list) {
@@ -198,10 +214,41 @@ class MainActivity : AppCompatActivity() {
             val chk = PermissionChecker.checkCallingOrSelfPermission(this@MainActivity, permission)
 
             if(chk == PackageManager.PERMISSION_DENIED) {
-                requestPermissions(permission_list,0)
-                break
+
+                if(check)
+                    permissionNotice()
+//                if(!check && Singleton.permissionAgreement)
+//                    Singleton.permissionAgreement = false
+
+                return false
             }
         }
+
+        return true
+    }
+
+    // GPS 가 켜져 있지 않을 경우에 설정을 물어볼 다이얼로그
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun permissionNotice() {
+
+        val inflater = this@MainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.permission_notice, null)
+
+        val locationDialog = AlertDialog.Builder(this@MainActivity)
+        locationDialog
+            .setPositiveButton("동 의") { dialog, which ->
+                requestPermissions(permission_list,0)
+                Singleton.permissionAgreement = true
+            }
+            .setNeutralButton("비 동 의") { dialog, which ->
+                Singleton.permissionAgreement = false
+            }
+            .create()
+
+        // 여백 눌러도 창 안없어지게
+        locationDialog.setCancelable(false)
+        locationDialog.setView(view)
+        locationDialog.show()
     }
 
     // GPS 가 켜져 있지 않을 경우에 설정을 물어볼 다이얼로그

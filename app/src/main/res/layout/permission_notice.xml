@@ -5,10 +5,10 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/permission_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="공지 사항"
+        android:text="@string/permission_title"
         android:layout_marginBottom="20dp"
         android:layout_marginTop="20dp"
         android:textStyle="bold"
@@ -16,11 +16,11 @@
         android:textSize="20dp"/>
 
     <TextView
-        android:id="@+id/noticeText"
+        android:id="@+id/permission_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:textSize="15dp"
-        android:text="@string/noticeText" />
+        android:text="@string/permission_message" />
 </LinearLayout>

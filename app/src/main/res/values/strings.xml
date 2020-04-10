@@ -2,5 +2,15 @@
     <string name="app_name">코로나돋보기</string>
     <string name="find">여기서 찾기</string>
     <string name="close"> X </string>
+    <string name="permission_title"> [필수적 접근 권한] </string>
+    <string name="permission_message"> 위치 권한
+    \n\n사용자 위치 기반 공적 마스크 판매 정보를 찾고자 합니다.
+    \n\n이를 위해 "위치 권한"을 동의(후 허용) 해주셔야 합니다.
+    \n\n비동의 시 마스크 판매 정보는 확인하실 수 없습니다.\n\n</string>
+
+    <string name="noticeText"> 판매정보 출처는 \"건강보험심사평가원\" 입니다.
+    \n\n5 - 10분의 오차가 있을 수 있으므로 마스크 수량 정보는 참고만을 부탁드리겠습니다.
+    \n\n화면상단 요일별 구매 가능 출생년도 끝자리를 꼭 확인해주세요.
+    \n\n공적 마스크 판매 위치는 사용자 위치의 반경 2km 입니다.</string>
 
 </resources>

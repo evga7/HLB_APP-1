@@ -52,6 +52,8 @@ class Singleton {
 
         var nDialog: Boolean = true
 
+        var permissionAgreement: Boolean = false
+
         //공공데이터 정보를 얻어옴.
         fun getPharmacyData(latitude:Double, longitude:Double, context: Context) {
 
