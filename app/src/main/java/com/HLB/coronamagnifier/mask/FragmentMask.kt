@@ -123,7 +123,7 @@ class FragmentMask : Fragment(), OnMapReadyCallback {
             "수" -> info = "수요일 : 출생년도 끝 [ 3, 8 ] 구매 가능"
             "목" -> info = "목요일 : 출생년도 끝 [ 4, 9 ] 구매 가능"
             "금" -> info = "금요일 : 출생년도 끝 [ 0, 5 ] 구매 가능"
-            else -> info = "평일에 구매 못하신 분들 구매 가능"
+            else -> info = "토,일 : 평일에 구매 못하신 분들 구매 가능"
         }
 
         textInfo.setText(info)
