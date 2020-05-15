@@ -213,5 +213,8 @@ fun CountryTrans(c:String):String =
         c == "Western Sahara" -> "서사하라"
         c == "Sao Tome and Principe" -> "상투메프린시페"
         c == "Yemen" -> "예멘"
+        c == "Lesotho" -> "레소토"
+        c == "Comoros" -> "코모로"
+        c == "Tajikistan" -> "타지키스탄"
         else -> c
     }

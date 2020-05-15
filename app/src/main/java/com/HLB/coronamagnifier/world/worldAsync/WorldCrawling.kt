@@ -61,8 +61,7 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
                         }
 
                         val day = infoSplit[3].substring(0, infoSplit[3].length - 1) // 날짜
-                        val time = infoSplit[5].substring(0, infoSplit[2].length) // 시간
-                        val worldTime = infoSplit[6] //세계표준시간
+                        val time = infoSplit[5] // 시간
 
                         Singleton.worldDayInfo = "   ( " + year + ". " + month + ". " + day + "  " + time + " " + "세계표준시간" + " )"
                     }
@@ -83,15 +82,15 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
 
             for (datum in data){
 
-                country = datum.select("td")[0].text().trim()
-                totalCases = datum.select("td")[1].text().trim()
-                newCases = datum.select("td")[2].text().trim()
-                totalDeaths = datum.select("td")[3].text().trim()
-                newDeaths = datum.select("td")[4].text().trim()
-                totalRecovered = datum.select("td")[5].text().trim()
+                country = datum.select("td")[1].text().trim()
+                totalCases = datum.select("td")[2].text().trim()
+                newCases = datum.select("td")[3].text().trim()
+                totalDeaths = datum.select("td")[4].text().trim()
+                newDeaths = datum.select("td")[5].text().trim()
+                totalRecovered = datum.select("td")[6].text().trim()
 
                 //World 제거
-                if (country == "World" || country == "Total:"){
+                if (country == "World" || country == "Total:" || country == ""){
                     continue
                 }
 
@@ -157,9 +156,9 @@ class WorldCrawling(act:AppCompatActivity, context: Context,frg:Fragment) : Asyn
 
             // total data addtotalCases
             data[data.size-1].let {total->
-                val totC = total.select("td")[1].text().trim()
-                val totD = total.select("td")[3].text().trim()
-                val totR = total.select("td")[5].text().trim()
+                val totC = total.select("td")[2].text().trim()
+                val totD = total.select("td")[4].text().trim()
+                val totR = total.select("td")[6].text().trim()
                 infoList.add(
                     Information(
                         0,
