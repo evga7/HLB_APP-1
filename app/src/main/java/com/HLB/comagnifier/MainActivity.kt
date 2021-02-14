@@ -98,10 +98,6 @@ class MainActivity : AppCompatActivity() {
                 getSystemService(Context.LOCATION_SERVICE) as LocationManager
             Singleton.Activity = this
 
-            // 위치가 켜져 있지 않은 경우 위치 설정창으로 넘김 ==> 마스크 쪽을 옮길 수도 있음.
-            if (!Singleton.isGpsOn() && checkPermission(false)) {
-                showLocationDialog()
-            }
 
             content = findViewById(R.id.frameLayout)
 
@@ -135,42 +131,6 @@ class MainActivity : AppCompatActivity() {
                             }
                         } else {
                             addFragment(currentfragment)
-                        }
-
-                    }
-                    if (newTab.id == R.id.mask) {
-
-                        var chk: Boolean = checkPermission(false)
-
-                        Singleton.backframent = 0
-
-                        // 위치권한 및 GPS 가 모두 켜져있는 경우
-                        if (Singleton.isGpsOn() && chk) {
-                            currentId=2
-                            // 사용자 인근 마스크 판매점 얻고 맵에 그림
-                            Singleton.search = false
-                            Singleton.getPharmacyData(
-                                0.0,
-                                0.0, this@MainActivity
-                            )
-                        }
-                        // 위치권한이나 위치가 켜져 있지 않은 경우
-                        else {
-
-                            if(!chk && Singleton.isGpsOn()) { // 확 인
-                                // Log.d("else", "2 !!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                                checkPermission(true)
-                            }
-                            else if(chk && !Singleton.isGpsOn()) { // 확 인
-                                // Log.d("else", "3 !!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                                showLocationDialog()
-                            }
-                            else { // 확 인
-                                // Log.d("else", "4 !!!!!!!!!!!!!!!!!!!!!!!!!!!")
-                                showLocationDialog()
-                                checkPermission(true)
-                            }
-
                         }
 
                     }

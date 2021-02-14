@@ -92,10 +92,10 @@ class koreaAsyncMainData(act: AppCompatActivity, context: Context, frg: Fragment
         val cityNum = elts2.select("span.num")
         val citybefore = elts2.select("span.before")
         val temp2 : ArrayList<FragmentKorea.Item> = arrayListOf()
-        for (i in 0..cityName.size-1)
+        for (i in 0..cityName.size-18)
         {
             var tempItem =
-                FragmentKorea.Item(cityName[i].text(), cityNum[i].text(),citybefore[i].text())
+                FragmentKorea.Item(cityName[i+17].text(), cityNum[i+17].text(),citybefore[i].text())
             temp2.add(tempItem)
         }
         Singleton.coList2=temp2
@@ -189,6 +189,7 @@ class koreaAsyncMainData(act: AppCompatActivity, context: Context, frg: Fragment
                 }
             }
         }
+        flag=0
         if (flag==1)
         {
             val dialogView =currentActivity.layoutInflater.inflate(R.layout.update_dialog, null)

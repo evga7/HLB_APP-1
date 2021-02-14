@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "com.HLB.comagnifier"
@@ -42,10 +42,10 @@ dependencies {
     implementation 'nl.joery.animatedbottombar:library:1.0.8'
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
-    compile 'com.github.jrvansuita:MaterialAbout:+'
+    implementation 'com.github.jrvansuita:MaterialAbout:+'
 
     // 네이버 지도 SDK
-    implementation 'com.naver.maps:map-sdk:3.7.1'
+    //implementation 'com.naver.maps:map-sdk:3.10.2'
 
     // google map api & location
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
